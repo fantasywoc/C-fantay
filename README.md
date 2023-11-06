@@ -1,7 +1,7 @@
 # C-fantay
 
 sublime C++ 配置
-'''c++
+```C++
 {
 	"encoding": "utf-8",
 	"working_dir": "$file_path",
@@ -22,7 +22,7 @@ sublime C++ 配置
 	]
 }
 
-'''
+```
 
 
 
