@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.10)  
+  
+# 设置项目名称  
+project(MyProject)  
+  
+# 查找Protobuf库  
+find_package(Protobuf REQUIRED)  
+  
+# 添加protobuf的include目录  
+include_directories(${PROTOBUF_INCLUDE_DIRS})  
+  
+# 添加你的源文件目录（如果需要）  
+# include_directories(${CMAKE_CURRENT_SOURCE_DIR})  
+  
+# 添加.proto文件对应的C++源文件  
+add_library(person_proto STATIC Person.pb.cc)  
+target_link_libraries(person_proto ${PROTOBUF_LIBRARIES})  
+  
+# 假设你有一个可执行文件需要使用这个库  
+add_executable(my_executable main.cpp)  
+target_link_libraries(my_executable person_proto)  
+  
+# 如果你的.proto文件或生成的C++文件没有直接放在根目录，  
+# 你需要指定它们的位置，例如：  
+# set(PROTO_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/protobuf_srcs)  
+# set(PROTO_FILES ${PROTO_SRC_DIR}/Person.proto)  
+# protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})  
+# add_library(person_proto STATIC ${PROTO_SRCS})  
+# target_link_libraries(person_proto ${PROTOBUF_LIBRARIES})  
+# ...  
+  
+# 注意：上面的注释代码块展示了如何动态生成.pb.cc和.pb.h文件  
+# 如果你是在编译时动态生成这些文件，你需要使用protobuf_generate_cpp函数  
+# 并确保你的CMakeLists.txt文件能够找到protoc编译器
