@@ -1,5 +1,7 @@
 # C-fantay
 
+study
+
 sublime C++ 配置
 ```C++
 {
