@@ -1,0 +1,136 @@
+#####################################
+
+#python3 ENCODING11.pys path
+
+#################################
+import os  
+import sys  
+
+
+def get_filetype(folder_to_search,ed_list):  
+    # 遍历指定文件夹及其所有子文件夹  
+    for root, dirs, files in os.walk(folder_to_search):  
+        for file in files:
+            # print(file)  
+            # 检查文件扩展名是否为.hpp  
+            ed_string=file.split(".")[-1]
+            if ed_string and ed_string!="pys": 
+                ed_s="."+ed_string
+                if ed_s not in ed_list:
+                    ed_list.append(ed_s)
+    print(ed_list)
+
+def convert_old_endswith_to_new_endswith(folder_to_search,old_endswith,new_endswith):  
+    # 遍历指定文件夹及其所有子文件夹  
+    for root, dirs, files in os.walk(folder_to_search):  
+        for file in files:  
+            # 检查文件扩展名是否为.hpp  
+            if file.endswith(old_endswith):  
+                # 构造.hpp文件的完整路径  
+                Old_file = os.path.join(root, file)  
+                # 构造.h文件的完整路径 
+                filename= file.replace(old_endswith,new_endswith) ; 
+                New_path = os.path.join(root,  filename)  
+                print(Old_file,end="-->")
+                # 读取.hpp文件的内容  
+                with open(Old_file, 'rb') as Old_file:  
+                    content = Old_file.read()  
+
+                # 将内容写入到.h文件中  
+                with open(New_path, 'wb') as New_path:  
+                    New_path.write(content)  
+                    print(f"{filename} :coded")
+
+def clear_file(folder_to_search):  
+    # 遍历指定文件夹及其所有子文件夹  
+    for root, dirs, files in os.walk(folder_to_search):  
+        for file in files:
+            # print(file)  
+            # 检查文件扩展名是否为.hpp  
+            if file.endswith("11") and not file.endswith("pys"):  
+                # 构造.hpp文件的完整路径  
+                Old_file = os.path.join(root, file)  
+                # 检查文件是否存在  
+                if os.path.exists(Old_file):  
+                    # 删除文件  
+                    os.remove(Old_file)  
+                    print(f"{Old_file}: has deleted")  
+                else:  
+                    print(f"{Old_file}: no exist")
+
+def clear_old_file(folder_to_search):  
+    # 遍历指定文件夹及其所有子文件夹  
+    for root, dirs, files in os.walk(folder_to_search):  
+        for file in files:
+            # print(file)  
+            # 检查文件扩展名是否为.hpp  
+            if not file.endswith("11") and not file.endswith("pys"):  
+                # 构造.hpp文件的完整路径  
+                Old_file = os.path.join(root, file)  
+                # 检查文件是否存在  
+                if os.path.exists(Old_file):  
+                    # 删除文件  
+                    os.remove(Old_file)  
+                    print(f"{Old_file}: has deleted")  
+                else:  
+                    print(f"{Old_file}: no exist")
+
+def coding_file(folder_to_search,old_endswith):
+    if((old_endswith[-2:]!="11") ):
+        new_endswith=old_endswith+"11"
+        convert_old_endswith_to_new_endswith(folder_to_search,old_endswith,new_endswith)
+
+def encoding_file(folder_to_search):
+  
+    # 遍历指定文件夹及其所有子文件夹  
+    for root, dirs, files in os.walk(folder_to_search):  
+        for file in files:  
+            # 检查文件扩展名是否为.hpp  
+            if file.endswith("11"):  
+                # 构造.hpp文件的完整路径  
+                Old_file = os.path.join(root, file)  
+
+                New_path =Old_file[:-2] 
+                filename=New_path
+                print(Old_file)
+                # 读取.hpp文件的内容  
+                with open(Old_file, 'rb') as Old_file:  
+                    content = Old_file.read()  
+
+                # 将内容写入到.h文件中  
+                with open(New_path, 'wb') as New_path:  
+                    New_path.write(content)  
+                    print(f"encoded file：{filename} ")
+
+
+if __name__ == '__main__':
+    # # # 指定要遍历的文件夹路径  
+    
+    if len(sys.argv) == 2: 
+        folder_to_search = sys.argv[1]
+        # 编解码判断
+        code_sign=0
+        ed_list=[]
+        get_filetype(folder_to_search,ed_list)
+        for i in ed_list:
+            if i.endswith("11"):
+                code_sign=1
+                break
+
+        if not code_sign:
+            print(ed_list)
+            for ed in ed_list:
+                # 编码
+                coding_file(folder_to_search,ed)
+            clear_old_file(folder_to_search)
+
+            print("--Coding success--")
+
+        else:
+            # 清理文件
+            encoding_file(folder_to_search)
+            clear_file(folder_to_search)
+            print("--Encoding success--")
+
+    else:
+         print("please input correct path!")
