@@ -71,12 +71,9 @@ public:
         for (auto& num : nums) {
             if (num != val) {
                 vec.push_back(num);
-                 count++;
+                count++;
             }
-           
-               
         }
-
         for (int i = 0; i != vec.size(); i++)
             nums[i] = vec[i];
         return count;
