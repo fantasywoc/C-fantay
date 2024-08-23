@@ -87,8 +87,6 @@ int main() {
     int m = 2;
     vector<int> nums1 = {0, 1, 2, 2, 3, 0, 4, 2};
 
-
-
     auto start = chrono::high_resolution_clock::now();
 
     Solution solution;
@@ -98,8 +96,6 @@ int main() {
     std::chrono::duration<double> elapsed = end - start;
     cout << "Elapsed time: " << elapsed.count() << " seconds" << endl;
     printv(nums1);
-
-
 
 
 
