@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/Sqlite3Example.dir/src/main.cpp.o  -o Sqlite3Example  -Wl,-rpath,/media/kf/data/kf/C-fantay/sqlite3/lib ../lib/libsqlite3.so 

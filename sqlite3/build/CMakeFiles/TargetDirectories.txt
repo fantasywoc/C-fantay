@@ -1,0 +1,3 @@
+/media/kf/data/kf/C-fantay/sqlite3/build/CMakeFiles/rebuild_cache.dir
+/media/kf/data/kf/C-fantay/sqlite3/build/CMakeFiles/edit_cache.dir
+/media/kf/data/kf/C-fantay/sqlite3/build/CMakeFiles/Sqlite3Example.dir

@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/sqlite3.h
+stdarg.h
+-
+
+/media/kf/data/kf/C-fantay/sqlite3/src/main.cpp
+sqlite3.h
+-
+iostream
+-
+string
+-
+
