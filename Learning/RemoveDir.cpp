@@ -63,10 +63,10 @@ int main(int argc, char* argv[])
     for (int i = 0; i < argc; ++i)
     {
         if(i!=0){
-            std::cout<<"remove "<< argv[i] <<" success!"<<std::endl;
+            std::cout << "Remove file " << i << "-->" << argv[i] << std::endl;
         	int res=remove_dir(argv[i]);
         	if(res==0){
-                std::cout << "Remove file " << i << "-->" << argv[i] << std::endl;
+                std::cout<<"remove "<< argv[i] <<" success!"<<std::endl;
         	}
         }
     }
