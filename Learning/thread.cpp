@@ -17,7 +17,7 @@ int main() {
     std::thread t1(add, a, b);
     std::thread t2(add, a, b);
 
-    t1.join();
+    // t1.join();
     t2.join();
 
     std::cout << "Sum: " << sum << std::endl; // 输出结果：Sum: 30
