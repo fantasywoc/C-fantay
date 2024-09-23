@@ -40,40 +40,91 @@
 
 // 这表明单例模式工作正常，实例成功调用了方法。
 
+
+// 单例模式的定义：保证一个类仅有一个实例，并提供一个该实例的全局访问点。
+// 线程锁实现
+
+
+// #include <iostream>
+// #include <mutex>
+// #include <memory>
+
+// class Singleton {
+// public:
+//     static Singleton* get_instance() {
+//         std::lock_guard<std::mutex> lock(mutex_);
+//         if (!_instance) {
+//             _instance.reset(new Singleton());
+//         }
+//         return _instance.get();
+//     }
+
+//     void do_something() {
+//         std::cout << "Doing something in the Singleton instance." << std::endl;
+//     }
+
+//     Singleton(const Singleton&) = delete;
+//     Singleton& operator=(const Singleton&) = delete;
+
+// private:
+//     Singleton() {}
+
+//     static std::unique_ptr<Singleton> _instance;
+//     static std::mutex mutex_;
+// };
+
+// // 静态成员变量初始化
+// std::unique_ptr<Singleton> Singleton::_instance;
+// std::mutex Singleton::mutex_;
+
+// int main() {
+//     Singleton* instance = Singleton::get_instance();
+//     instance->do_something();
+//     return 0;
+// }
+
+
 #include <iostream>
 #include <mutex>
 #include <memory>
-
+#include <thread>
 class Singleton {
-public:
-    static Singleton* get_instance() {
-        std::lock_guard<std::mutex> lock(mutex_);
-        if (!_instance) {
-            _instance.reset(new Singleton());
-        }
-        return _instance.get();
-    }
-
-    void do_something() {
-        std::cout << "Doing something in the Singleton instance." << std::endl;
-    }
-
-    Singleton(const Singleton&) = delete;
-    Singleton& operator=(const Singleton&) = delete;
-
 private:
-    Singleton() {}
+    static std::unique_ptr<Singleton> instance_;
+    static std::once_flag flag_;
 
-    static std::unique_ptr<Singleton> _instance;
-    static std::mutex mutex_;
+    Singleton() {
+        std::cout << "Singleton created" << std::endl;
+    }
+
+public:
+    static Singleton* getInstance() {
+        std::call_once(flag_, [] {
+            instance_.reset(new Singleton());
+        });
+        return instance_.get();
+    }
+
+    void doSomething(int th) {
+        std::cout << "Doing something..." << th<< std::endl;
+    }
 };
 
-// 静态成员变量初始化
-std::unique_ptr<Singleton> Singleton::_instance;
-std::mutex Singleton::mutex_;
+std::unique_ptr<Singleton> Singleton::instance_ = nullptr;
+std::once_flag Singleton::flag_;
+
+void threadFunction(int th) {
+    Singleton* instance = Singleton::getInstance();
+    instance->doSomething(th);
+}
 
 int main() {
-    Singleton* instance = Singleton::get_instance();
-    instance->do_something();
+    std::thread t1(threadFunction,1);
+    t1.join();
+    std::cout<< "Singleton" <<std::endl;
+    std::thread t2(threadFunction,2);
+    t2.join();
+    std::cout<< "Singleton t2 over" <<std::endl;
+
     return 0;
 }
