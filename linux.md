@@ -278,8 +278,8 @@ CMake suite maintained and supported by Kitware (kitware.com/cmake).
 
 ## 跨主机键鼠共享
 
-```
-wget  ``http://archive.ubuntu.com/ubuntu/pool/universe/s/synergy/synergy_1.8.8-stable+dfsg.1-1build1_amd64.deb
+```bash
+wget  http://archive.ubuntu.com/ubuntu/pool/universe/s/synergy/synergy_1.8.8-stable+dfsg.1-1build1_amd64.deb
 sudo dpkg -i synergy_1.8.8-stable+dfsg.1-1build1_amd64.deb
 ```
 
@@ -287,7 +287,7 @@ sudo dpkg -i synergy_1.8.8-stable+dfsg.1-1build1_amd64.deb
 
 因为20.04换成了qt5，所以这里需要添加qt4的ppa源。
 
-```
+```bash
 sudo add-apt-repository ppa:rock-core/qt4
 sudo apt-get update
 sudo apt-get install libcanberra-gtk-module
@@ -313,7 +313,7 @@ sudo apt-get -f install
 
 如果“附加驱动”里没有相关驱动，打开终端输入下面命令安装，然后重启电脑。
 
-```
+```bash
     sudo apt update
     sudo apt-get install bcmwl-kernel-source
 ```
@@ -322,9 +322,9 @@ sudo apt-get -f install
 
 打开终端输入命令：
 
-```
+```bash
     sudo iwconfig
-    查看到网卡名称后，输入命令关闭电源管理。我的网卡名称wlp5s0
+    #查看到网卡名称后，输入命令关闭电源管理。我的网卡名称wlp5s0
     sudo iwconfig wlp5s0 power off
 ```
 
@@ -342,8 +342,7 @@ sudo apt-get -f install
 
 1. **创建空的** **ISO** **文件**： 使用 `dd` 命令结合 `genisoimage` 或 `mkisofs` 工具来生成一个 ISO 文件，并确保填充正确的文件系统和目录结构。
 
-```Plain
-bashCopy Code
+```bash
 dd if=/dev/zero of=empty.iso bs=1M count=100
 ```
 
@@ -351,8 +350,7 @@ dd if=/dev/zero of=empty.iso bs=1M count=100
 
 1. **使用** **`genisoimage`** **创建** **ISO** **文件结构**： `genisoimage` 是一个创建 ISO 文件系统镜像的工具，它能够将文件和目录组织成符合 ISO 9660 标准的格式。
 
-```Plain
-bashCopy Code
+```bash
 genisoimage -o empty.iso -V VOLUME_NAME -r -J -l -iso-level 3 path/to/directory
 ```
 
@@ -360,28 +358,27 @@ genisoimage -o empty.iso -V VOLUME_NAME -r -J -l -iso-level 3 path/to/directory
 
 1. **挂载** **ISO** **文件**： 确保你有足够的权限，并使用 `mount` 命令挂载 ISO 文件到一个目录。
 
-```Plain
-bashCopy Code
+```bash
 sudo mount -o loop empty.iso /mnt/iso
 ```
 
-这里假设 `/mnt/iso` 是你预先创建好的挂载点。
+`/mnt/iso` 是你预先创建好的挂载点。
 
 1.可以尝试用下面方法处理依赖问题，紧跟前一条安装命令后面输入下面命令，然后再执行安装命令：
 
-```
+```bash
 sudo apt-get install -f
 ```
 
 2.在安装软件之前，或者遇到依赖问题之时，可以尝试安装build-essential解决问题，它聚合了一些常用的依赖：
 
-```
+```bash
 sudo apt-get install build-essential
 ```
 
  3.用aptitude来代替apt-get，aptitude也是一个包管理工具，它在处理依赖问题时比apt-get更优秀
 
-```
+```bash
 sudo aptitude install 需要安装的软件名
 ```
 
@@ -394,3 +391,74 @@ https://zhuanlan.zhihu.com/p/148889634
 ## Cmake 
 
 mkdir -p build  &&   cd build  &&  cmake ..  cmake -DCMAKE_INSTALL_PREFIX=/you/install/path/  &&  make 
+
+
+
+
+
+## adb  command
+
+```bash 
+#capture device screen and pull it locally
+filename="$(date +%Y%m%d_%H%M%S).png"  
+adb shell screencap -p /sdcard/temp_screenshot.png  
+adb pull /sdcard/temp_screenshot.png "$filename"  
+adb shell rm /sdcard/temp_screenshot.png
+```
+
+### Capture screen
+
+```Bash
+#!/bin/bash  
+  
+# 执行adb devices命令并捕获其输出  
+adb_output=$(adb devices)  
+# 检查输出中是否包含"device"（忽略大小写）  
+if echo "$adb_output" | grep -qi 'device'; then  
+    echo "ADB 已成功连接到设备。"  
+    # 输出设备型号  
+    echo "设备型号: $(adb shell getprop ro.product.model)"  
+    # 输出Android版本  
+    echo "Android版本: $(adb shell getprop ro.build.version.release)" 
+    adb shell "df /data | grep /data" 
+else  
+    echo "ADB 未连接到任何设备。"  
+fi
+filename="$(date +%Y%m%d_%H%M%S).png"  
+adb shell screencap -p /sdcard/temp_screenshot.png  
+adb pull /sdcard/temp_screenshot.png ~/Desktop/screen_$filename
+adb shell rm /sdcard/temp_screenshot.png
+echo "Capture screen  saved as ~/Desktop/screenrecord_$current_time.mp4"
+```
+
+### Screen record
+
+```Bash
+#!/bin/bash  
+  
+# 执行adb devices命令并捕获其输出  
+adb_output=$(adb devices)  
+  
+# 检查输出中是否包含"device"（忽略大小写）  
+if echo "$adb_output" | grep -qi 'device'; then  
+    echo "ADB 已成功连接到设备。"  
+    # 输出设备型号  
+    echo "设备型号: $(adb shell getprop ro.product.model)"  
+    # 输出Android版本  
+    echo "Android版本: $(adb shell getprop ro.build.version.release)" 
+    adb shell "df /data | grep /data" 
+else  
+    echo "ADB 未连接到任何设备。"  
+fi
+# 录制屏幕三分钟  
+adb shell screenrecord /sdcard/screenrecord_3min.mp4 --time-limit 180  
+sleep 5  
+# 获取当前时间  
+current_time=$(date +%Y%m%d_%H%M%S)  
+# 拉取文件并重命名  
+adb pull /sdcard/screenrecord_3min.mp4 ~/Desktop/screenrecord_$current_time.mp4  
+# 删除设备上的源文件  
+adb shell rm /sdcard/screenrecord_3min.mp4  
+echo "Screen recording saved as ~/Desktop/screenrecord_$current_time.mp4"
+```
+

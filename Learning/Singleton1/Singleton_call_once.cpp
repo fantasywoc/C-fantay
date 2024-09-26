@@ -42,6 +42,8 @@
 #include <mutex>
 #include <memory>
 #include <thread>
+
+
 class Singleton {
 private:
     static std::unique_ptr<Singleton> instance_;
@@ -64,13 +66,13 @@ public:
     }
 };
 
-std::unique_ptr<Singleton> Singleton::instance_ = nullptr;
-std::once_flag Singleton::flag_;
-
 void threadFunction(int th) {
     Singleton* instance = Singleton::getInstance();
     instance->doSomething(th);
 }
+
+std::unique_ptr<Singleton> Singleton::instance_ = nullptr;
+std::once_flag Singleton::flag_;
 
 int main() {
     std::thread t1(threadFunction,1);
