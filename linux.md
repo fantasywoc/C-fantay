@@ -176,6 +176,104 @@ CMake suite maintained and supported by Kitware (kitware.com/cmake).
 - `git add [file|folder]`：将文件或文件夹添加到暂存区。
 - `git add .`：将当前目录下的所有文件添加到暂存区。
 
+
+
+### 删除
+
+> **删除单个文件**：
+>
+> ```
+> git rm <file_name>
+> ```
+>
+> **删除多个文件**：
+>
+> ```
+> git rm <file1> <file2> <file3>
+> ```
+>
+> **删除目录**： 如果你要删除一个目录及其所有内容，可以使用 `-r` 选项：
+>
+> ```
+> git rm -r <directory_name>
+> ```
+>
+> **强制删除未跟踪的文件**： 使用 `-f` 选项可以强制删除被 Git 跟踪的文件，即使它们已经被修改：
+>
+> ```
+> git rm -f <file_name>
+> ```
+>
+> ### 仅从索引中删除，但保留工作区文件
+>
+> 有时候，你可能希望从版本控制中删除文件，但想要保留工作区中的副本。这可以通过 `--cached` 选项实现：
+>
+> ```
+> git rm --cached <file_name>
+> ```
+>
+> ### 提交更改
+>
+> 在删除文件后，记得提交更改，以便在版本历史中记录这些删除：
+>
+> ```
+> git commit -m "Removed file(s)"
+> ```
+>
+> 
+
+
+
+### 移动&重命名
+
+> 在 Git 中，如果你想要重命名一个文件或目录，可以使用 `git mv` 命令。下面是一些示例和步骤：
+>
+> ### 重命名文件
+>
+> 1. **重命名单个文件**：
+>
+> ```
+> git mv <旧文件名> <新文件名>
+> ```
+>
+> 例如：
+>
+> ```
+> git mv old_file.txt new_file.txt
+> ```
+>
+> **重命名目录**：
+>
+> ```
+> git mv <旧目录名> <新目录名>
+> ```
+>
+> 例如：
+>
+> ```
+> git mv old_directory new_directory
+> ```
+>
+> ### 提交更改
+>
+> 在重命名文件后，记得提交更改，以便在版本历史中记录这个重命名：
+>
+> ```
+> bash
+> git commit -m "Renamed file from old_file.txt to new_file.txt"
+> ```
+>
+> ### 注意事项
+>
+> - 使用 `git mv` 命令会自动将文件的旧路径从 Git 的索引中删除，并添加新路径。
+> - 你也可以先重命名文件，然后手动使用 git add  和 git rm
+>
+> ```
+> mv old_file.txt new_file.txt
+> git add new_file.txt
+> git rm old_file.txt
+> ```
+
 ### 提交
 
 - `git commit -m "[message]"`：将暂存区的修改提交到本地仓库，并附带一条消息。
@@ -413,22 +511,39 @@ adb shell rm /sdcard/temp_screenshot.png
   
 # 执行adb devices命令并捕获其输出  
 adb_output=$(adb devices)  
-# 检查输出中是否包含"device"（忽略大小写）  
-if echo "$adb_output" | grep -qi 'device'; then  
-    echo "ADB 已成功连接到设备。"  
+  
+# 获取已连接的设备列表
+devices=$(adb devices | grep -w 'device')
+
+if [ -z "$devices" ]; then
+    echo $adb_output
+    echo "未连接任何设备。"
+else
+    adb_output
+    echo "已连接设备："
+    echo "$devices"
+    echo "ADB 已成功连接到设备。"
+    adb shell df -h  
     # 输出设备型号  
     echo "设备型号: $(adb shell getprop ro.product.model)"  
     # 输出Android版本  
     echo "Android版本: $(adb shell getprop ro.build.version.release)" 
-    adb shell "df /data | grep /data" 
-else  
-    echo "ADB 未连接到任何设备。"  
+
+    filename="$(date +%Y%m%d_%H%M%S).png"  
+    adb shell screencap -p /sdcard/temp_screenshot.png 
+    
+    sleep 6  
+
+    # 获取当前时间  
+    current_time=$(date +%Y%m%d_%H%M%S)  
+    if [ ! -d "/home/kf/Desktop/adb" ]; then
+        mkdir -p /home/kf/Desktop/adb/
+    fi
+
+    adb pull /sdcard/temp_screenshot.png /home/kf/Desktop/adb/screen_$filename
+    adb shell rm /sdcard/temp_screenshot.png
+    echo "Capture screen  saved as /home/kf/Desktop/adb/screenrecord_$current_time"
 fi
-filename="$(date +%Y%m%d_%H%M%S).png"  
-adb shell screencap -p /sdcard/temp_screenshot.png  
-adb pull /sdcard/temp_screenshot.png ~/Desktop/screen_$filename
-adb shell rm /sdcard/temp_screenshot.png
-echo "Capture screen  saved as ~/Desktop/screenrecord_$current_time.mp4"
 ```
 
 ### Screen record
@@ -436,29 +551,49 @@ echo "Capture screen  saved as ~/Desktop/screenrecord_$current_time.mp4"
 ```Bash
 #!/bin/bash  
   
+# 获取参数
+param1=$1
+
+# 验证参数是否为数字
+if ! [[ "$param1" =~ ^[0-9]+$ ]]; then
+    echo "错误: 请输入一个有效的数字作为录制时长。"
+    exit 1
+fi
+
+echo "录制时常：${param1} s"
+
 # 执行adb devices命令并捕获其输出  
 adb_output=$(adb devices)  
   
-# 检查输出中是否包含"device"（忽略大小写）  
-if echo "$adb_output" | grep -qi 'device'; then  
+
+# 获取已连接的设备列表
+devices=$(adb devices | grep -w 'device')
+
+if [ -z "$devices" ]; then
+    echo $adb_output
+    echo "未连接任何设备。"
+else
+    echo $adb_output
+    echo "已连接设备："
+    echo "$devices"
     echo "ADB 已成功连接到设备。"  
     # 输出设备型号  
     echo "设备型号: $(adb shell getprop ro.product.model)"  
     # 输出Android版本  
     echo "Android版本: $(adb shell getprop ro.build.version.release)" 
     adb shell "df /data | grep /data" 
-else  
-    echo "ADB 未连接到任何设备。"  
+
+    # 录制屏幕 
+    adb shell screenrecord /sdcard/screenrecord_temp.mp4 --time-limit ${param1}  
+    sleep 6  
+    # 获取当前时间  
+    current_time=$(date +%Y%m%d_%H%M%S)  
+    # 拉取文件并重命名  
+    adb pull /sdcard/screenrecord_temp.mp4  ~/Desktop/adb/screenrecord_${param1}s_${current_time}.mp4  
+    # 删除设备上的源文件  
+    adb shell rm /sdcard/screenrecord_temp.mp4  
+    echo "Screen recording saved as ~/Desktop/adb/screenrecord_${param1}s_${current_time}.mp4"
 fi
-# 录制屏幕三分钟  
-adb shell screenrecord /sdcard/screenrecord_3min.mp4 --time-limit 180  
-sleep 5  
-# 获取当前时间  
-current_time=$(date +%Y%m%d_%H%M%S)  
-# 拉取文件并重命名  
-adb pull /sdcard/screenrecord_3min.mp4 ~/Desktop/screenrecord_$current_time.mp4  
-# 删除设备上的源文件  
-adb shell rm /sdcard/screenrecord_3min.mp4  
-echo "Screen recording saved as ~/Desktop/screenrecord_$current_time.mp4"
+
 ```
 
