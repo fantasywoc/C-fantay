@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流布局</title>
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,user-scalable=no' />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div id='forcenter'></div>
+    <script src="./index.js"></script>
+    <script>
+        let W = new waterfall({
+            id: 'forcenter',
+            imgUrls: [
+                "https://gd-hbimg.huaban.com/01d4ff197f1b7c82c5c251e8e8236bb1ab7e0727651a5-WDx8ol_fw658webp",
+                "https://gd-hbimg.huaban.com/e320380f3c9178cc0b8310e7c03d8e241ccce13f1bf41d-iPTu0A_fw658webp",
+                "https://gd-hbimg.huaban.com/acde98e286be64cb57aa26b0e16668991796d122247433-sFxXXE_fw658webp",
+                "https://gd-hbimg.huaban.com/7ebc91824c83e5a6c5a95f432316297e0469b7fbb59fc-6f6dw7_fw658webp",
+                "https://gd-hbimg.huaban.com/75e24879bd50b6bdaee6897ecf7df8fed8fc6b321c1ae-IdBFAO_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/6c7c6cb1280654293598481ab4caa8ef308f6abc176736-9Dqd8L_fw658webp",
+                "https://gd-hbimg.huaban.com/23d645d1dbd6a45d37ad37e4b97d18be91e2dc49de203-lQ7f1c_fw658webp",
+                "https://gd-hbimg.huaban.com/144d28eaa9837fc65633e5ab05efcf95a3610c5913f7a5-S26C5f_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/4e94b094670cb92be05e115e7752e7e7a677721ace7ca-OmpKsJ_fw658webp",
+                "https://gd-hbimg.huaban.com/6378e2264b274c2a66c0d7a64243249d3cdd4990230087-YsZfHb_fw658webp",
+                "https://gd-hbimg.huaban.com/7879c0d70a9651bfef97dbdbca860d0173fb2083efdfa-JtEY7C_fw658webp",
+                "https://gd-hbimg.huaban.com/0ad9ee4917eb9bee29131a6305d91c1b512165f7ae91e-y5vGPb_fw658webp",
+                "https://gd-hbimg.huaban.com/18cfb795803a281a3fca234f05a0e8267eab4b08474f4-pvt6dW_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/b38ec047337c60dacec8532438e8df1f2f355e4a7739e2-lQkaGs_fw658webp",
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                "https://gd-hbimg.huaban.com/1cd188eba7137deba40617e49ff81cf9555cda3730edf-ddVRVj_fw658webp",
+                "https://gd-hbimg.huaban.com/d700b15123823599108913ceb94e188563594b2e7c2d4-M2VRbA_fw658webp",
+                "https://gd-hbimg.huaban.com/450d20605009f0f5389a31fed68e43d8ba1b93a8617d1-6dGTj0_fw658webp",
+                "https://gd-hbimg.huaban.com/e12930b69dc1e0bc3f5a152b7038ac250a9ec35792c97-G9OwPi_fw658webp",
+                "https://gd-hbimg.huaban.com/a9900bec233ff1393fa8e23e0e607f20a091c21e429e4-fneOUo_fw658webp", 
+                "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+                 "https://gd-hbimg.huaban.com/f768bc96a779b0daf9dc046551624e76f07285fb13a61b-fPShae_fw658webp",
+            ],
+            itemWidth: 300 
+        })
+ 
+        window.onload = () => {
+            W.render()
+        }
+        window.onresize = () => {
+            W.resize()
+        }
+ 
+    </script>
+</body>
+ 
+</html>
