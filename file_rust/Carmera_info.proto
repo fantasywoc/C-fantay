@@ -1,0 +1,11 @@
+syntax = "proto3";
+package Carmera_info; 
+message image_info{
+    string name = 1;
+    string Make = 2;  
+    string Model = 3;  
+    string ExposureTime = 4;  
+    string StandardOutputSensitivity = 5;
+    string ExposureProgram = 6;
+    string FNumber = 7;
+}

@@ -1,0 +1,12 @@
+/media/kf/data/kf/C-fantay/file_rust/target/debug/deps/libgif-18de52d9df329078.rmeta: /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/lib.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/traits.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/common.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/mod.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/decoder.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/converter.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/encoder.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/../README.md
+
+/media/kf/data/kf/C-fantay/file_rust/target/debug/deps/gif-18de52d9df329078.d: /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/lib.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/traits.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/common.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/mod.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/decoder.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/converter.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/encoder.rs /home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/../README.md
+
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/lib.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/traits.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/common.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/mod.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/decoder.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/reader/converter.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/encoder.rs:
+/home/kf/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gif-0.13.1/src/../README.md:
